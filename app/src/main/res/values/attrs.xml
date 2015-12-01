@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="BoyTabs">
+		<attr name="boy_off_icon" format="color|reference"/>
+		<attr name="boy_off_text" format="string"/>
+		<attr name="boy_on_icon" format="color|reference"/>
+		<attr name="boy_on_text" format="string"/>
+	</declare-styleable>
+	<declare-styleable name="GirlTabs">
+		<attr name="girl_off_icon" format="color|reference"/>
+		<attr name="girl_off_text" format="string"/>
+		<attr name="girl_on_icon" format="color|reference"/>
+		<attr name="girl_on_text" format="string"/>
+	</declare-styleable>
+</resources>
