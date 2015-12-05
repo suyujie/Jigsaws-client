@@ -42,9 +42,7 @@ public class NetUtils {
             conn.getOutputStream().close();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-
                 Log.e(TAG, "httpCode:" + conn.getResponseCode() + "==" + params);
-
                 return null;
             } else {
                 return readAsJson(conn.getInputStream());
@@ -74,10 +72,8 @@ public class NetUtils {
             conn.getOutputStream().write(bytes);
             conn.getOutputStream().flush();
             conn.getOutputStream().close();
-
-            int httpCode = conn.getResponseCode();
-            Log.d(TAG + "--------net stream", "httpCode:" + httpCode);
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                Log.d(TAG + "--------net stream", "httpCode:" + conn.getResponseCode());
                 return null;
             } else {
                 return readAsGameInput(conn.getInputStream());
