@@ -14,8 +14,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.sw.jigsaws.data.GameData;
 import com.sw.jigsaws.net.msg.LoginRunnable;
 import com.sw.jigsaws.service.HeartbeatService;
-import com.sw.jigsaws.ui.Tutorial;
 import com.sw.jigsaws.ui.Home;
+import com.sw.jigsaws.ui.Tutorial;
 
 public class BootStrap extends Activity {
 

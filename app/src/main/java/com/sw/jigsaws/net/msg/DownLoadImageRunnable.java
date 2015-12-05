@@ -4,20 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 
+import com.sw.jigsaws.data.GameData;
 import com.sw.jigsaws.net.NetUtils;
 
-/**
- * Created by suiyujie on 2015/11/14.
- */
 public class DownLoadImageRunnable extends AbstractRunnable {
 
     private String TAG = "DownLoadImageRunnable";
 
-    private Long imageId;
     private Handler handler;
 
-    public DownLoadImageRunnable(Long imageId, Handler handler) {
-        this.imageId = imageId;
+    public DownLoadImageRunnable(Handler handler) {
         this.handler = handler;
     }
 
@@ -25,7 +21,7 @@ public class DownLoadImageRunnable extends AbstractRunnable {
 
     public void run() {
 
-        byte[] imgBytes = NetUtils.readImageFromNet(imageId);
+        byte[] imgBytes = NetUtils.readImageFromNet(GameData.game.url);
 
         if (imgBytes == null) {
             handler.obtainMessage(NetERROR, null).sendToTarget();

@@ -129,10 +129,10 @@ public class NetUtils {
         return arrayGameInput;
     }
 
-    public static byte[] readImageFromNet(Long imageId) {
+    public static byte[] readImageFromNet(String imgUrl) {
 
         try {
-            URL url = new URL(Config.imageDomain + imageId);
+            URL url = new URL(imgUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");   //设置请求方法为GET
             conn.setReadTimeout(15 * 1000);    //设置请求过时时间为15秒

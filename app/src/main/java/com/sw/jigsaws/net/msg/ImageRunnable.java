@@ -4,11 +4,9 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sw.jigsaws.data.GameData;
 import com.sw.jigsaws.net.NetUtils;
 
-/**
- * Created by suiyujie on 2015/11/14.
- */
 public class ImageRunnable extends AbstractRunnable {
 
     private String TAG = "ImageRunnable";
@@ -25,9 +23,11 @@ public class ImageRunnable extends AbstractRunnable {
         ImageMsg imageMsg = new ImageMsg();
 
         JSONObject result = NetUtils.doPostJson(imageMsg.toJson());
+
         if (result != null) {
-            Log.w(TAG, "result = " + result.toString());
-            handler.obtainMessage(NetOK, result.get("imageId")).sendToTarget();
+            Log.i(TAG, result.toJSONString());
+            GameData.setGame(result.getLong("imageId"), result.getString("url"), false);
+            handler.obtainMessage(NetOK, null).sendToTarget();
         } else {
             handler.obtainMessage(NetERROR).sendToTarget();
         }

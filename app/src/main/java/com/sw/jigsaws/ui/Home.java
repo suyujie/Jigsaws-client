@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.sw.jigsaws.R;
+
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
 
 public class Home extends Activity implements View.OnClickListener {
 
@@ -21,6 +23,7 @@ public class Home extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.home);
 
         btn_play = (Button) findViewById(R.id.home_btn_play);
@@ -30,10 +33,11 @@ public class Home extends Activity implements View.OnClickListener {
         btn_play.setOnClickListener(this);
         btn_upload.setOnClickListener(this);
 
+        //有米广告条
+        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+        LinearLayout adLayout = (LinearLayout) findViewById(R.id.adLayout);
+        adLayout.addView(adView);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
     }
 
 
@@ -76,5 +80,6 @@ public class Home extends Activity implements View.OnClickListener {
         }
         return false;
     }
+
 
 }

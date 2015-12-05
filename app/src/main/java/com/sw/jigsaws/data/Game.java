@@ -7,16 +7,18 @@ import com.sw.jigsaws.utils.Utils;
 public class Game {
 
     public Long imageId;
+    public String url;
     public Bitmap bitmap;
     public boolean isTryPlay;
 
     public Integer line = 4;
     public Integer column = 3;
 
-    public Game(Long imageId, Bitmap bitmap, boolean isTryPlay, int easy_hard) {
-        this.imageId = imageId;
-        this.bitmap = bitmap;
-        this.isTryPlay = isTryPlay;
+    public Game() {
+
+    }
+
+    public void setHard(int easy_hard) {
         switch (easy_hard) {
             case 1:
                 this.line = this.column = Utils.randomInt(3, 3);

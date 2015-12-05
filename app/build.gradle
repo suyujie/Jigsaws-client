@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        myConfig {
+            keyAlias 'suiyujie'
+            keyPassword 'suiyujie'
+            storeFile file('D:/Key.store')
+            storePassword 'suiyujie'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
         applicationId "com.sw.jigsaws"
         minSdkVersion 15
@@ -11,8 +18,19 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        myConfig {
+            storeFile file("D:\\Key.store")
+            storePassword "suiyujie"
+            keyAlias "key"
+            keyPassword "suiyujie"
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.myConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -23,5 +41,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.alibaba:fastjson:1.2.7'
-    compile 'com.google.android.gms:play-services:7.0.0'
+    compile files('libs/YoumiSdk_v5.3.3_2015-10-10.jar')
 }

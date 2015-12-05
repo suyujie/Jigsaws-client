@@ -21,10 +21,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.sw.jigsaws.R;
-import com.sw.jigsaws.data.Game;
 import com.sw.jigsaws.data.GameData;
 import com.sw.jigsaws.utils.ImageSize;
-import com.sw.jigsaws.utils.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -188,7 +186,8 @@ public class SelectPic extends Activity implements OnClickListener {
             //试玩
             case R.id.button_tryplay:
                 if (image != null) {
-                    GameData.game = new Game(null, image, true, Utils.randomInt(0, 2));
+                    GameData.setGame(null, null, true);
+                    GameData.setGame(image);
                     startActivity(new Intent(SelectPic.this, PlayGame.class));
                 }
                 break;

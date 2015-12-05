@@ -18,14 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.sw.jigsaws.R;
-import com.sw.jigsaws.data.Game;
 import com.sw.jigsaws.data.GameData;
 import com.sw.jigsaws.game.GameJigsawsLayout;
 import com.sw.jigsaws.net.msg.CommentRunnable;
 import com.sw.jigsaws.net.msg.DownLoadImageRunnable;
 import com.sw.jigsaws.net.msg.ImageRunnable;
 import com.sw.jigsaws.net.msg.UploadRunnable;
-import com.sw.jigsaws.utils.Utils;
 
 public class PlayGame extends Activity implements View.OnClickListener {
 
@@ -35,6 +33,7 @@ public class PlayGame extends Activity implements View.OnClickListener {
 
     private Button button_good;
     private Button button_bad;
+    private Button button_next;
     private Button button_upload;
     private Button button_cancel;
     private Button button_giveup;
@@ -51,18 +50,21 @@ public class PlayGame extends Activity implements View.OnClickListener {
 
         button_good = (Button) this.findViewById(R.id.game_btn_good);
         button_bad = (Button) this.findViewById(R.id.game_btn_bad);
+        button_next = (Button) this.findViewById(R.id.game_btn_next);
         button_upload = (Button) this.findViewById(R.id.game_btn_upload);
         button_cancel = (Button) this.findViewById(R.id.game_btn_cancel);
         button_giveup = (Button) this.findViewById(R.id.game_btn_giveup);
 
         button_good.setVisibility(View.GONE);
         button_bad.setVisibility(View.GONE);
+        button_next.setVisibility(View.GONE);
         button_upload.setVisibility(View.GONE);
         button_cancel.setVisibility(View.GONE);
 
         // 添加按钮监听
         button_good.setOnClickListener(this);
         button_bad.setOnClickListener(this);
+        button_next.setOnClickListener(this);
         button_upload.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
         button_giveup.setOnClickListener(this);
@@ -168,13 +170,8 @@ public class PlayGame extends Activity implements View.OnClickListener {
     Handler readImgIdHandler = new Handler() {
         public void handleMessage(Message msg) {
 
-            Log.e(this.getClass().toString(), "====" + msg.what);
-
-            // 从网络获取图片地址
-            GameData.game = new Game((Long) msg.obj, null, false, Utils.randomInt(0, 2));
-
             if (GameData.game.imageId != null) {
-                new Thread(new DownLoadImageRunnable(GameData.game.imageId, downImgHandler)).start();
+                new Thread(new DownLoadImageRunnable(downImgHandler)).start();
             }
 
         }
@@ -194,10 +191,11 @@ public class PlayGame extends Activity implements View.OnClickListener {
 
                 new Thread(new CommentRunnable(GameData.game.imageId, 1, new Handler() {
                     public void handleMessage(Message msg) {
-                        Log.e(TAG, "====" + msg.what);
-                        loadingAlert.dismiss();
                         Toast.makeText(PlayGame.this, "感谢评价", Toast.LENGTH_LONG).show();
-                        finish();
+                        loadingAlert.dismiss();
+                        button_good.setVisibility(View.GONE);
+                        button_bad.setVisibility(View.GONE);
+                        button_next.setVisibility(View.VISIBLE);
                     }
                 })).start();
                 break;
@@ -209,11 +207,19 @@ public class PlayGame extends Activity implements View.OnClickListener {
                 button_bad.setVisibility(View.GONE);
                 new Thread(new CommentRunnable(GameData.game.imageId, 2, new Handler() {
                     public void handleMessage(Message msg) {
-                        Log.e(TAG, "====" + msg.what);
                         Toast.makeText(PlayGame.this, "感谢评价", Toast.LENGTH_LONG).show();
-                        finish();
+                        loadingAlert.dismiss();
+                        button_good.setVisibility(View.GONE);
+                        button_bad.setVisibility(View.GONE);
+                        button_next.setVisibility(View.VISIBLE);
                     }
                 })).start();
+                break;
+            //继续玩
+            case R.id.game_btn_next:
+                GameData.game = null;
+                finish();
+                startActivity(new Intent(PlayGame.this, PlayGame.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             //上传
             case R.id.game_btn_upload:
